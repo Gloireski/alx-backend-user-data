@@ -32,7 +32,9 @@ class Auth:
         """ returns None - request
         request is flask object
         """
-        pass
+        if request is None or request.headers['Authorization'] is None:
+            return None
+        return request.headers['Authorization']
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ returns None - request
