@@ -32,7 +32,7 @@ class Auth:
         """ returns None - request
         request is flask object
         """
-        if request is None or request.headers['Authorization'] is None:
+        if request is None or request.headers.get('Authorization') is None:
             return None
         return request.headers['Authorization']
 
