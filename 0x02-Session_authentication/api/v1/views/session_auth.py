@@ -20,7 +20,7 @@ def login_post() -> str:
         return jsonify({"error": "password missing"}), 400
     user = User.search({'email': email})
     if not user:
-        return jsonify({"error": "no user found for this email"}, 404)
+        return jsonify({"error": "no user found for this email"}), 404
     user = user[0]
     if not user.is_valid_password(pwd):
         return jsonify({"error": "wrong password"}), 401
