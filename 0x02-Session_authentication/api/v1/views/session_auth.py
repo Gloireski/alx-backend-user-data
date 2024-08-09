@@ -13,10 +13,10 @@ def login_post() -> str:
     log user in
     """
     email = request.form.get('email')
-    if email is None:
+    if email is None or email == "":
         return jsonify({"error": "email missing"}), 400
     pwd = request.form.get('password')
-    if pwd is None:
+    if pwd is None or pwd == "":
         return jsonify({"error": "password missing"}), 400
     user = User.search({'email': email})
     if not user:
