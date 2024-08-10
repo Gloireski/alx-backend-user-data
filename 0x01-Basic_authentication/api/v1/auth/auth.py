@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 """
 auth class def
 """
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth:
@@ -22,6 +24,13 @@ class Auth:
         if excluded_paths[-1] != '/':
             excluded_paths += '/'
 
+        astericks = [stars[:-1]
+                     for stars in excluded_paths if stars[-1] == '*']
+
+        for stars in astericks:
+            if path.startswith(stars):
+                return False
+
         if path in excluded_paths:
             return False
         else:
@@ -39,4 +48,11 @@ class Auth:
         """ returns None - request
         request will be the Flask request object
         """
-        pass
+        return None
+
+    def session_cookie(self, request=None):
+        """ returns a cookie value from request """
+        if request is None:
+            return None
+        cookie = os.getenv("SESSION_NAME")
+        return request.cookies.get(cookie)
