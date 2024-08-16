@@ -66,10 +66,10 @@ class DB:
         use find_user_by to locate the user to update
         """
         user = self.find_user_by(id=user_id)
-        keys = ['id', 'email', 'hashes_password', 'session_id', 'reset_token']
+        keys = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
         for key, value in kwargs.items():
-            if key not in keys:
-                raise ValueError
-            else:
+            if key in keys:
                 setattr(user, key, value)
+            else:
+                raise ValueError
         self._session.commit()
