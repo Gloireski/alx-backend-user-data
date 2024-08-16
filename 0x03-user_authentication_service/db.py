@@ -50,7 +50,7 @@ class DB:
         """returns the first row found in the users table
         as filtered by the method’s input arguments
         """
-        keys = ['email', 'hashes_password', 'session_id', 'reset_token']
+        keys = ['id', 'email', 'hashes_password', 'session_id', 'reset_token']
         # print(kwargs)
         for key in kwargs.keys():
             if key not in keys:
@@ -59,3 +59,17 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """takes as argument a required user_id integer and
+        arbitrary keyword arguments, and returns None.
+        use find_user_by to locate the user to update
+        """
+        user = self.find_user_by(id=user_id)
+        keys = ['id', 'email', 'hashes_password', 'session_id', 'reset_token']
+        for key, value in kwargs.items():
+            if key not in keys:
+                raise ValueError
+            else:
+                setattr(user, key, value)
+        self._session.commit()
