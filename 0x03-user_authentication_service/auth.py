@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Auth Class for user attributes validation
 """
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
@@ -49,3 +51,14 @@ class Auth:
         except NoResultFound:
             pass
         return False
+
+    def create_session(self, email: str) -> str:
+        """create a session
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            uuid = _generate_uuid()
+            setattr(user, 'session_id', uuid)
+            return uuid
+        except NoResultFound:
+            return None
