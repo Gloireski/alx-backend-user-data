@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """ entry app """
+from db import DB
 from auth import Auth
+from user import User
 from flask import Flask, jsonify, request, abort, redirect
 from flask.helpers import make_response
 
